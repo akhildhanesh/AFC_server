@@ -15,23 +15,27 @@
                 UID copied to clipboard
             </button>
         </div>
+        <div>
+            <img id="qr_image">
+        </div>
     </div>
 </div>
 
 <script>
     const uid_area = document.getElementById('uid_area')
     const showMsg = document.getElementById('copied')
+    const qr_image = document.getElementById('qr_image')
+
     const generate = () => {
         fetch('/admin/generateUID')
             .then(response => response.json())
             .then(response => {
                 uid_area.innerText = response.uid
-                console.log(response.uid)
+                qr_image.src = `https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=${response.uid}`
                 copy()
             })
             .catch(error => {
                 console.error(error);
-                // alert('Something went wrong')
             })
     }
 
